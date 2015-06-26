@@ -47,7 +47,7 @@
     }
   ],
   "name": "kendoUiMobileApp",
-  "navigation": "drawer",
+  "navigation": "none",
   "view": "authenticationView",
   "skin": "native"
 }

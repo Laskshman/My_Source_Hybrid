@@ -15,20 +15,21 @@
     <script src="bower_components/everlive/min/everlive.all.min.js"></script>
     <script src="lib/progress/progress.all.min.js"></script>
     <script src="app.js"></script>
-    <script src="alert.js"></script>
     <script src="data/defaultProvider.js"></script>
 </head>
 
 <body id="kendoUiMobileApp">
-    <div data-role="layout" data-id="main">   
+    <div data-role="layout" data-id="main">
         <header data-role="header">
-        <div data-role="navbar">
-            <span data-role="view-title"></span>
-            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
-            <a data-role="button" data-align="right" data-click="app.alert.logout">Logout</a>
-        </div>
-    </header>
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+
         <!-- application views will be rendered here -->
+
+        <footer data-role="footer">
+        </footer>
     </div>
 
     <div data-role="layout" data-id="main-nonav">
@@ -39,20 +40,12 @@
         </header>
 
         <!-- application views will be rendered here -->
-    </div>  
-    <div id="appDrawer" data-role="drawer" data-title="Navigation">
-        <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-            </div>
-        </header>
-        <ul id="navigation-container" data-role="listview">
-            <li><a href="home/view.html" data-icon="home">Home</a>
-            </li>
-        </ul>
+
+        <footer data-role="footer">
+        </footer>
     </div>
     <script src="home/index.js"></script>
-    <script src="authenticationMainView/index.js"></script>
+    <script src="authenticationView/index.js"></script>
 </body>
 
 </html>
