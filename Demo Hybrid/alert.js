@@ -1,15 +1,32 @@
-function(){
-    
-     // Global error handling
-    var showAlert = function(message, callback) {
-        navigator.notification.alert(message, callback || function () {
-        },"Demo App", 'OK');
+/**
+ * alert & navigate JS
+ */
+
+
+var app = app || {};
+
+app.alert = (function () {
+    // Global error handling
+    var showAlert = function (message, callback) {
+        navigator.notification.alert(message, callback || function () {}, "Demo App", 'OK');
     };
 
-    var showError = function(message) {
+    var showError = function (message) {
         showAlert(message, 'Error occured');
     };
-    
+
+    var navigateHome = function () {
+        app.mobileApp.navigate('#signin');
+    };
+    var logout = function () {
+        debugger;
+            alert.AppHelper.logout()
+            .then(navigateHome, function (err) {
+                alert.showError(err.message);
+                navigateHome();
+            });
+    }
+
     var AppHelper = {
 
         // Return user profile picture url
@@ -37,7 +54,7 @@ function(){
 
         // Current user logout
         logout: function () {
-            var provider= app.data.defaultProvider;
+            var provider = app.data.defaultProvider;
             return provider.Users.logout();
         },
 
@@ -46,4 +63,4 @@ function(){
             $(this).prop('rows', rows.length + 1);
         }
     };
-}
+})

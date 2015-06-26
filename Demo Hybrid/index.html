@@ -20,14 +20,14 @@
 </head>
 
 <body id="kendoUiMobileApp">
-    <div data-role="layout" data-id="main">
+    <div data-role="layout" data-id="main">   
         <header data-role="header">
-            <div data-role="navbar">
-                <span data-role="view-title"></span>
-                <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
-            </div>
-        </header>
-
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+            <a data-role="button" data-align="right" data-click="app.alert.logout">Logout</a>
+        </div>
+    </header>
         <!-- application views will be rendered here -->
     </div>
 
@@ -39,8 +39,7 @@
         </header>
 
         <!-- application views will be rendered here -->
-    </div>
-
+    </div>  
     <div id="appDrawer" data-role="drawer" data-title="Navigation">
         <header data-role="header">
             <div data-role="navbar">
@@ -53,7 +52,7 @@
         </ul>
     </div>
     <script src="home/index.js"></script>
-    <script src="authenticationView/index.js"></script>
+    <script src="authenticationMainView/index.js"></script>
 </body>
 
 </html>

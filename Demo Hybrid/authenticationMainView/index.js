@@ -44,7 +44,7 @@ app.authenticationView = kendo.observable({
             mobileNo: '',
             birthDate: new Date(),
             gender: '0',
-            validateData: function (data) {
+            validateData: function (data) {                
                 if (!data.userName) {
                     alert('Missing User Name');
                     return false;
@@ -82,13 +82,12 @@ app.authenticationView = kendo.observable({
             },
             signin: function () {
                 var model = authenticationViewModel,
-                    userName = model.userName.toLowerCase(),
+                    userName = model.userName,
                     password = model.password;
 
                 if (!model.validateData(model)) {
                     return false;
-                }
-
+                }				
                 provider.Users.login(userName, password, successHandler, init);
             },
             register: function () {
@@ -125,6 +124,13 @@ app.authenticationView = kendo.observable({
             onSelectChange: function () {
                 var selected = sel.options[sel.selectedIndex].value;
                 sel.style.color = (selected === 0) ? '#b6c5c6' : '#34495e';
+            },
+            forgot:function(){
+                alert("This is For Forgot Password");
+            },
+            forgotView: function(){
+                 mode = mode === 'signin' ? 'forgot' : 'signin';
+                 init();
             }
         });
 

@@ -1,5 +1,6 @@
-<div data-role="view" data-title="Authentication" data-layout="main-nonav" data-model="app.authenticationView" data-show="app.authenticationView.onShow">
-    <div class="signin-view">
+<div data-role="view" data-title="Hospitality Demo" data-layout="main-nonav" data-model="app.authenticationView" data-show="app.authenticationView.onShow">
+    <div class="signin-view" id="signin">
+        <center><h2>Login</h2></center>
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
@@ -13,16 +14,15 @@
                     </label>
                 </li>
             </ul>
-
             <div class="button-group button-group-vertical">
                 <a data-role="button" class="km-state-active" data-bind="events: { click: authenticationViewModel.signin }">Sign In</a>
-
                 <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Register</a>
-
+                <a data-role="button" data-bind="events: { click: authenticationViewModed.forgotView}">Forgor Password</a>
             </div>
         </form>
     </div>
     <div class="signup-view" style="display:none;">
+        <center><h2>Registration</h2></center>
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
