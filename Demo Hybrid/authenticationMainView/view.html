@@ -1,0 +1,77 @@
+<div data-role="view" data-title="Authentication" data-layout="main-nonav" data-model="app.authenticationView" data-show="app.authenticationView.onShow">
+    <div class="signin-view">
+        <form>
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>User Name
+                        <input type="email" data-bind="value: authenticationViewModel.userName" required autofocus>
+                    </label>
+                </li>
+                <li>
+                    <label>Password
+                        <input type="password" data-bind="value: authenticationViewModel.password" required>
+                    </label>
+                </li>
+            </ul>
+            <div class="button-group button-group-vertical">
+                <a data-role="button" class="km-state-active" data-bind="events: { click: authenticationViewModel.signin }">Sign In</a>
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Register</a>
+            </div>            
+        </form>
+    </div>
+    <div class="signup-view" style="display:none;">
+        <form>
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>Name
+                        <input type="text" data-bind="value: authenticationViewModel.displayName">
+                    </label>
+                </li>
+                <li>
+                    <label>Email
+                        <input type="email" data-bind="value: authenticationViewModel.email" required>
+                    </label>
+                </li>
+                <li>
+                    <label>User Name
+                        <input type="text" data-bind="value: authenticationViewModel.userName">
+                    </label>
+                </li>
+                <li>
+                    <label>Password
+                        <input type="password" data-bind="value: authenticationViewModel.password">
+                    </label>
+                </li>
+                <li>
+                    <label>Re-Confirm Password
+                        <input type="password" data-bind="value: authenticationViewModel.passwordSalt">
+                    </label>
+                </li>
+                <li>
+                    <label>Mobile No
+                        <input type="number" data-bind="value: authenticationViewModel.mobileNo">
+                    </label>
+                </li>
+                <li>
+                    <label>Date Of Birth
+                        <input type="date" id="signupBirthDatePicker" data-bind="value: authenticationViewModel.birthDate">
+                    </label>
+                </li>
+                <li>
+                <select id="signupGenderPicker" data-bind="value: Gender" onchange="authenticationViewModel.onSelectChange(this)">
+                    <option value="0" selected>gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                </select>
+            </li>
+            </ul>
+            <div class="button-group button-group-vertical">
+                <a class="km-state-active" data-role="button" data-bind="events: { click: authenticationViewModel.register }">Register</a>
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Sign In</a>
+            </div>
+        </form>
+    </div>
+    <div class="offline" align="center" style="display:none;">
+        You are currently offline. Before using this app in offline mode you must initialize it while you are online
+    </div>
+</div>

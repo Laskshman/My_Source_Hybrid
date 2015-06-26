@@ -37,7 +37,8 @@ function(){
 
         // Current user logout
         logout: function () {
-            return el.Users.logout();
+            var provider= app.data.defaultProvider;
+            return provider.Users.logout();
         },
 
         autoSizeTextarea: function () {
