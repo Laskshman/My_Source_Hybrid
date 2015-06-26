@@ -48,6 +48,6 @@
   ],
   "name": "kendoUiMobileApp",
   "navigation": "drawer",
-  "view": "home",
+  "view": "authenticationView",
   "skin": "native"
 }

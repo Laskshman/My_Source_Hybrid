@@ -10,7 +10,7 @@
             app.mobileApp = new kendo.mobile.Application(document.body, {
 
                 // the application needs to know which view to load first
-                initial: 'home/view.html',
+                initial: 'authenticationView/view.html',
                 statusBarStyle: 'black-translucent'
             });
         });
