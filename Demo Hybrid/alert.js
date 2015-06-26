@@ -15,17 +15,17 @@ app.alert = (function () {
         showAlert(message, 'Error occured');
     };
 
-    var navigateHome = function () {
-        app.mobileApp.navigate('#signin');
-    };
-    var logout = function () {
-        debugger;
-            alert.AppHelper.logout()
-            .then(navigateHome, function (err) {
-                alert.showError(err.message);
-                navigateHome();
-            });
-    }
+    // var navigateHome = function () {
+    //     app.mobileApp.navigate('#signin');
+    // };
+    // var logout = function () {
+    //     debugger;
+    //         alert.AppHelper.logout()
+    //         .then(navigateHome, function (err) {
+    //             alert.showError(err.message);
+    //             navigateHome();
+    //         });
+    // }
 
     var AppHelper = {
 

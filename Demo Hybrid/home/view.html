@@ -1,2 +1,12 @@
 <div data-role="view" data-title="Home" data-layout="main" data-model="app.home" data-show="app.home.onShow">
+    <header data-role="header">
+        <div data-role="navbar">                    
+            <a data-align="left" data-role="button" data-bind="events: { click: homeViewModel.logout }" >Logout</a>            
+        </div>
+    </header>
+    <h1>
+        Welcome To Hospitality Demo
+    </h1>
+    <footer data-role="footer">
+    </footer>
 </div>
