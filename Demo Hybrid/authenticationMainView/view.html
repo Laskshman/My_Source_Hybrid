@@ -1,6 +1,8 @@
 <div data-role="view" data-title="Hospitality Demo" data-layout="main-nonav" data-model="app.authenticationView" data-show="app.authenticationView.onShow">
     <div class="signin-view" id="signin">
-        <center><h2>Login</h2></center>
+        <center>
+            <h2>Login</h2>
+        </center>
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
@@ -17,12 +19,18 @@
             <div class="button-group button-group-vertical">
                 <a data-role="button" class="km-state-active" data-bind="events: { click: authenticationViewModel.signin }">Sign In</a>
                 <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Register</a>
-                <a data-role="button" data-bind="events: { click: authenticationViewModel.forgotView}">Forgor Password</a>
-            </div>            
+                <a data-role="button" data-rel="modalview" href="#forgot">Forgor Password</a>
+            </div>
         </form>
     </div>
     <div class="signup-view" style="display:none;">
-        <center><h2>Registration</h2></center>
+        <div class="button-group">
+            <a style="background-color: #3A5898; color:white;" data-role="button" data-bind="events: { click: authenticationViewModel.signupFacebook }">Sign up with Facebook</a>
+            <a style="background-color: #DB4B39; color:white;" data-role="button" data-bind="events: { click: authenticationViewModel.signupGoogle }">Sign up with Google+</a>
+        </div>
+        <center>
+            <h2>Registration</h2>
+        </center>
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
@@ -61,21 +69,25 @@
                     </label>
                 </li>
                 <li>
-                <select id="signupGenderPicker" data-bind="value: Gender" onchange="authenticationViewModel.onSelectChange(this)">
-                    <option value="0" selected>gender</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                </select>
-            </li>
-            </ul>
+                    <select id="signupGenderPicker" data-bind="value: Gender" onchange="authenticationViewModel.onSelectChange(this)">
+                        <option value="0" selected>gender</option>
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+                </li>
+            </ul>           
             <div class="button-group button-group-vertical">
                 <a class="km-state-active" data-role="button" data-bind="events: { click: authenticationViewModel.register }">Register</a>
                 <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Sign In</a>
             </div>
         </form>
     </div>
-    <div class="forgot-view" style="display:none;">
-        <center><h2>Forgot Password</h2></center>
+    <div data-role="modalview" id="forgot" style="width: 90%">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span>Forgot Password</span>
+            </div>
+        </div>
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
@@ -86,13 +98,13 @@
                 <center>-----OR-----</center>
                 <li>
                     <label>Enter Mobile No
-                        <input type="email" data-bind="value: authenticationViewModel.mobileNo">
+                        <input type="number" data-bind="value: authenticationViewModel.mobileNo">
                     </label>
                 </li>
             </ul>
             <div class="button-group button-group-vertical">
                 <a class="km-state-active" data-role="button" data-bind="events: { click: authenticationViewModel.forgot }">Submit</a>
-                <a data-role="button" data-bind="events: { click: authenticationViewModel.forgotView }">Sign In</a>
+                <a data-role="button" data-bind="events: { click: authenticationViewModel.forgotView }">Close</a>
             </div>
         </form>
     </div>

@@ -44,7 +44,7 @@ app.authenticationView = kendo.observable({
             mobileNo: '',
             birthDate: new Date(),
             gender: '0',
-            validateData: function (data) {                
+            validateData: function (data) {
                 if (!data.userName) {
                     alert('Missing User Name');
                     return false;
@@ -87,7 +87,7 @@ app.authenticationView = kendo.observable({
 
                 if (!model.validateData(model)) {
                     return false;
-                }				
+                }
                 provider.Users.login(userName, password, successHandler, init);
             },
             register: function () {
@@ -105,13 +105,12 @@ app.authenticationView = kendo.observable({
                         Gender: gender,
                         BirthDate: birthDate,
                     };
-
                 if (!model.validateDataRegister(model)) {
                     return false;
                 }
 
                 provider.Users.register(email, password, attrs, successHandler, init).then(function () {
-                        showAlert("Registration successful");                       
+                        showAlert("Registration successful");
                     },
                     function (err) {
                         showError(err.message);
@@ -125,12 +124,37 @@ app.authenticationView = kendo.observable({
                 var selected = sel.options[sel.selectedIndex].value;
                 sel.style.color = (selected === 0) ? '#b6c5c6' : '#34495e';
             },
-            forgot:function(){
-                alert("This is For Forgot Password");
+            forgot: function () {
+                debugger;
+                if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
+                    alert("Email address Or Mobile No is required.");
+                    return;
+                }
+                var apiKey = appsettings.everlive.apiKey;
+                $.ajax({
+                    type: "POST",
+                    url: "https://api.everlive.com/v1/" + apiKey + "/Users/resetpassword",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        Email: this.authenticationViewModel.email
+                    }),
+                    success: function () {
+                        navigator.notification.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
+                        window.location.href = "authenticationMainView/view.html";
+                    },
+                    error: function () {
+                        navigator.notification.alert("Unfortunately, an error occurred resetting your password.")
+                    }
+                });
             },
-            forgotView: function(){
-                 mode = mode === 'signin' ? 'forgot' : 'signin';
-                 init();
+            forgotView: function () {
+                $("#forgot").data("kendoMobileModalView").close();
+            },
+            signupFacebook: function () {
+                alert("Clicked the Facebook");
+            },
+            signupGoogle: function () {
+                alert("Clicked the Google");
             }
         });
 
