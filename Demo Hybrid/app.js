@@ -32,7 +32,8 @@
     }
 
     window.app = app;
-
+    
+    
     app.isOnline = function() {
         if (!navigator || !navigator.connection) {
             return true;

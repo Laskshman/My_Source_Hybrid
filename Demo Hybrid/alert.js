@@ -4,13 +4,14 @@
 
 var appalert = {
     // Global error handling
-     showAlert : function (message, callback) {
+    showAlert: function (message, callback) {
         navigator.notification.alert(message, callback || function () {}, "Demo App", 'OK');
     },
-     showError : function (message) {
+    showError: function (message) {
         showAlert(message, 'Error occured');
-    }
+    }    
 };
+
 var AppHelper = {
 
     // Return user profile picture url
@@ -37,7 +38,7 @@ var AppHelper = {
     },
 
     // Current user logout
-    logout: function () {        
+    logout: function () {
         var provider = app.data.defaultProvider;
         return provider.Users.logout();
     },
@@ -45,5 +46,14 @@ var AppHelper = {
     autoSizeTextarea: function () {
         var rows = $(this).val().split('\n');
         $(this).prop('rows', rows.length + 1);
+    },
+    isNullOrEmpty: function (value) {
+        debugger;
+        return typeof value === 'undefined' || value === null || value === '';
+    },
+    isKeySet: function(key) {
+        debugger;
+        var regEx = /^\$[A-Z_]+\$$/;
+    return !AppHelper.isNullOrEmpty(key) && !regEx.test(key);
     }
 };
