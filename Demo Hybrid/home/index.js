@@ -5,22 +5,17 @@ app.home = kendo.observable({
 });
 (function(parent){
     var navigateHome = function () {
-        app.mobileApp.navigate('#signin');
+        app.mobileApp.navigate('authenticationMainView/view.html');
     };
-    var homeViewModel= (function(){
+    var homeViewModel= kendo.observable({
          // Logout user
-        var logout = function () {
-            app.alert.Apphelper.logout()
+         logout: function () {
+            AppHelper.logout()
             .then(navigateHome, function (err) {
-                app.showError(err.message);
+                appalert.showError(err.message);
                 navigateHome();
             });
-        };
-        return {           
-            logout: logout
-        };
-    }());    
-    parent.set('homeViewModel', homeViewModel);
-    parent.set('onShow', function() {       
-    });
+        }   
+    });    
+    parent.set('homeViewModel', homeViewModel);   
 })(app.home)
