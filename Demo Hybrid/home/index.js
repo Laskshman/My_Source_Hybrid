@@ -18,4 +18,6 @@ app.home = kendo.observable({
         }   
     });    
     parent.set('homeViewModel', homeViewModel);   
+     parent.set('onShow', function () {        
+    });
 })(app.home)

@@ -1,8 +1,7 @@
 'use strict';
 
 app.authenticationView = kendo.observable({
-    onShow: function () {        
-    }
+    onShow: function () {}
 });
 (function (parent) {
     var provider = app.data.defaultProvider,
@@ -99,7 +98,7 @@ app.authenticationView = kendo.observable({
                     userName = model.userName,
                     gender = model.gender,
                     birthDate = model.birthDate,
-                    mobileno= model.mobileno,
+                    mobileno = model.mobileNo,
                     attrs = {
                         Email: email,
                         DisplayName: displayName,
@@ -112,13 +111,14 @@ app.authenticationView = kendo.observable({
                     return false;
                 }
 
-                provider.Users.register(email, password, attrs, successHandler, init).then(function () {
-                        appalert.showAlert("Registration successful");
-                    	window.location.href = "home/view.html";
-                    },
-                    function (err) {
-                        appalert.showError(err.message);
-                    });
+                provider.Users.register(email, password, attrs)
+                    .then(function () {
+                            appalert.showAlert("Registration successful");
+                            app.mobileApp.navigate('home/view.html');
+                        },
+                        function (err) {
+                            appalert.showError(err.message);
+                        });
             },
             toggleView: function () {
                 mode = mode === 'signin' ? 'register' : 'signin';
@@ -133,7 +133,7 @@ app.authenticationView = kendo.observable({
                 if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
                     alert("Email address Or Mobile No is required.");
                     return;
-                }                
+                }
                 var apiKey = appsettings.everlive.apiKey;
                 $.ajax({
                     type: "POST",
@@ -182,9 +182,9 @@ app.authenticationView = kendo.observable({
                 facebook.getAccessToken(function (token) {
                     provider.everlive.Users.loginWithFacebook(token, function (data) {
                             alert(JSON.stringify(data));
-                            }, function (error) {
-                                alert(JSON.stringify(error));
-                            })
+                        }, function (error) {
+                            alert(JSON.stringify(error));
+                        })
                         .then(function () {
                             // EQATEC analytics monitor - track login type
                             // if (isAnalytics) {
