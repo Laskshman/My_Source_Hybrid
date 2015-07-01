@@ -24,7 +24,7 @@
           "gotoRegisterLabel": "Register",
           "registerEmailLabel": "Email",
           "registerPasswordLabel": "Password",
-          "registerNameLabel": "Name",
+          "registerNameLabel": "User Name",
           "registerLabel": "Register",
           "registerRedirect": "home",
           "gotoSigninLabel": "Sign In"
