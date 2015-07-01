@@ -1,6 +1,6 @@
 'use strict';
 
-app.authenticationView = kendo.observable({
+app.authenticationMainView = kendo.observable({
     onShow: function () {}
 });
 (function (parent) {    
@@ -251,4 +251,4 @@ app.authenticationView = kendo.observable({
     parent.set('onShow', function () {
         provider.Users.currentUser().then(successHandler, init);
     });
-})(app.authenticationView);
+})(app.authenticationMainView);
