@@ -67,7 +67,7 @@ app.authenticationView = kendo.observable({
                     alert('Missing password');
                     return false;
                 }
-                if (data.password === data.passwordSalt) {
+                if (data.password !== data.passwordSalt) {
                     alert('Confirm Password Mismatch');
                     return false;
                 }
@@ -99,22 +99,25 @@ app.authenticationView = kendo.observable({
                     userName = model.userName,
                     gender = model.gender,
                     birthDate = model.birthDate,
+                    mobileno= model.mobileno,
                     attrs = {
                         Email: email,
                         DisplayName: displayName,
                         Username: userName,
                         Gender: gender,
                         BirthDate: birthDate,
+                        MobileNo: mobileno
                     };
                 if (!model.validateDataRegister(model)) {
                     return false;
                 }
 
                 provider.Users.register(email, password, attrs, successHandler, init).then(function () {
-                        showAlert("Registration successful");
+                        appalert.showAlert("Registration successful");
+                    	window.location.href = "home/view.html";
                     },
                     function (err) {
-                        showError(err.message);
+                        appalert.showError(err.message);
                     });
             },
             toggleView: function () {

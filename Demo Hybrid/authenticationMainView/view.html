@@ -24,10 +24,10 @@
         </form>
     </div>
     <div class="signup-view" style="display:none;">
-        <div class="button-group">
+<!--         <div class="button-group">
             <a style="background-color: #3A5898; color:white;" data-role="button" data-bind="events: { click: authenticationViewModel.signupFacebook }">Signup with Facebook</a>
             <a style="background-color: #DB4B39; color:white;" data-role="button" data-bind="events: { click: authenticationViewModel.signupGoogle }">Signup with Google+</a>
-        </div>
+        </div> -->
         <center>
             <h2>Registration</h2>
         </center>
@@ -53,7 +53,7 @@
                         <input type="date" id="signupBirthDatePicker" data-bind="value: authenticationViewModel.birthDate">
                     </label>
                 </li>
-                <li>
+                <li>Gender
                     <select id="signupGenderPicker" data-bind="value: Gender" onchange="authenticationViewModel.onSelectChange(this)">
                         <option value="0" selected>gender</option>
                         <option value="1">Male</option>
