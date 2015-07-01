@@ -22,11 +22,16 @@ var appsettings={
     },
 
     google: {
-        clientId: '49677839859-smq9b41rmork7lb2imdac9ofdjfsm1il.apps.googleusercontent.com',
-        redirectUri: 'https://localhost/LoginResult.html'
-        //clientId: '406987471724-q1sorfhhcbulk6r5r317l482u9f62ti8.apps.googleusercontent.com', // Put your Google Client ID here
-        //redirectUri: 'http://localhost' // Put your Google Redirect URI here
+        clientId: '406987471724-q1sorfhhcbulk6r5r317l482u9f62ti8.apps.googleusercontent.com', // Put your Google Client ID here
+        redirectUri: 'http://localhost' // Put your Google Redirect URI here
     },
+
+    //google: {
+    //    clientId: '49677839859-smq9b41rmork7lb2imdac9ofdjfsm1il.apps.googleusercontent.com',
+    //    redirectUri: 'https://localhost/LoginResult.html'
+    //    //clientId: '406987471724-q1sorfhhcbulk6r5r317l482u9f62ti8.apps.googleusercontent.com', // Put your Google Client ID here
+    //    //redirectUri: 'http://localhost' // Put your Google Redirect URI here
+    //},
     messages: {
         mistSimulatorAlert: 'The social login doesn\'t work in the In-Browser Client, you need to deploy the app to a device, or run it in the simulator of the Windows Client or Visual Studio.',
         removeActivityConfirm: 'This activity will be deleted. This action can not be undone.'

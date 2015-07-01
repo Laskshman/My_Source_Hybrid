@@ -1,9 +1,10 @@
 'use strict';
 
-app.authenticationMainView = kendo.observable({
-    onShow: function () {}
+app.authenticationView = kendo.observable({
+    onShow: function () {        
+    }
 });
-(function (parent) {    
+(function (parent) {
     var provider = app.data.defaultProvider,
         mode = 'signin',
         registerRedirect = 'home',
@@ -129,7 +130,7 @@ app.authenticationMainView = kendo.observable({
                 if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
                     alert("Email address Or Mobile No is required.");
                     return;
-                }
+                }                
                 var apiKey = appsettings.everlive.apiKey;
                 $.ajax({
                     type: "POST",
@@ -152,16 +153,16 @@ app.authenticationMainView = kendo.observable({
             },
             signupFacebook: function () {
                 debugger;
-                alert("Clicked the Facebook");              
+                alert("Clicked the Facebook");
                 var isFacebookLogin = AppHelper.isKeySet(appsettings.facebook.appId) && AppHelper.isKeySet(appsettings.facebook.redirectUri);
                 if (!isFacebookLogin) {
                     alert('Facebook App ID and/or Redirect URI not set. You cannot use Facebook login.');
                     return;
-                }                
+                }
                 if (isInMistSimulator) {
                     alert(appsettings.messages.mistSimulatorAlert);
                     return;
-                }                
+                }
                 var facebookConfig = {
                     name: 'Facebook',
                     loginMethodName: 'loginWithFacebook',
@@ -176,7 +177,11 @@ app.authenticationMainView = kendo.observable({
                 var facebook = new IdentityProvider(facebookConfig);
                 app.mobileApp.showLoading();
                 facebook.getAccessToken(function (token) {
-                    provider.everlive.Users.loginWithFacebook(token)
+                    provider.everlive.Users.loginWithFacebook(token, function (data) {
+                            alert(JSON.stringify(data));
+                            }, function (error) {
+                                alert(JSON.stringify(error));
+                            })
                         .then(function () {
                             // EQATEC analytics monitor - track login type
                             // if (isAnalytics) {
@@ -198,7 +203,7 @@ app.authenticationMainView = kendo.observable({
                         });
                 });
             },
-            signupGoogle: function () {                               
+            signupGoogle: function () {
                 var isGoogleLogin = AppHelper.isKeySet(appsettings.google.clientId) && AppHelper.isKeySet(appsettings.google.redirectUri);
                 if (!isGoogleLogin) {
                     alert('Google Client ID and/or Redirect URI not set. You cannot use Google login.');
@@ -251,4 +256,4 @@ app.authenticationMainView = kendo.observable({
     parent.set('onShow', function () {
         provider.Users.currentUser().then(successHandler, init);
     });
-})(app.authenticationMainView);
+})(app.authenticationView);
