@@ -138,10 +138,14 @@ app.authenticationView = kendo.observable({
             },
             forgot: function () {
                 debugger;
-                if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
-                    appalert.showError('Email address Or Mobile No is required.');
+                if (!this.authenticationViewModel.email) {
+                    appalert.showAlert('Email address is required.');
                     return;
                 }
+                // if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
+                //     appalert.showError('Email address Or Mobile No is required.');
+                //     return;
+                // }
                 //if (this.authenticationViewModel.mobileNo) {
                 //    debugger;
                 //    //Instantiate Everlive Twilio API
