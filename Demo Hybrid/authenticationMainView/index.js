@@ -1,8 +1,7 @@
 'use strict';
 
 app.authenticationView = kendo.observable({
-    onShow: function () {
-    }
+    onShow: function () {}   
 });
 (function (parent) {
     var provider = app.data.defaultProvider,
@@ -47,18 +46,24 @@ app.authenticationView = kendo.observable({
             gender: '0',
             validateData: function (data) {
                 if (!data.userName) {
-                    alert('Missing User Name');
+                    appalert.showAlert('Missing Name');
+                    //alert('Missing User Name');
                     return false;
                 }
-
                 if (!data.password) {
-                    alert('Missing password');
+                    appalert.showAlert('Missing Password');
+                    //alert('Missing password');
                     return false;
                 }
 
                 return true;
             },
             validateDataRegister: function (data) {
+                if (!data.displayName) {
+                    appalert.showAlert('Missing Name');
+                    //alert('Missing email');
+                    return false;
+                }
                 if (!data.email) {
                     appalert.showAlert('Missing email');
                     //alert('Missing email');
@@ -116,12 +121,12 @@ app.authenticationView = kendo.observable({
                 }
                 provider.Users.register(email, password, attrs)
                     .then(function () {
-                    appalert.showAlert('Registration successful');
-                    app.mobileApp.navigate('authenticationMainView/view.html');
-                },
-                function (err) {
-                    appalert.showError(err.message);
-                });
+                            appalert.showAlert('Registration successful');
+                            app.mobileApp.navigate('authenticationMainView/view.html');
+                        },
+                        function (err) {
+                            appalert.showError(err.message);
+                        });
             },
             toggleView: function () {
                 mode = mode === 'signin' ? 'register' : 'signin';
@@ -206,10 +211,10 @@ app.authenticationView = kendo.observable({
                 app.mobileApp.showLoading();
                 facebook.getAccessToken(function (token) {
                     provider.everlive.Users.loginWithFacebook(token, function (data) {
-                        alert(JSON.stringify(data));
-                    }, function (error) {
-                        alert(JSON.stringify(error));
-                    })
+                            alert(JSON.stringify(data));
+                        }, function (error) {
+                            alert(JSON.stringify(error));
+                        })
                         .then(function () {
                             // EQATEC analytics monitor - track login type
                             // if (isAnalytics) {
