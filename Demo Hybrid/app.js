@@ -5,11 +5,14 @@
         data: {}
     };
 
+    var watchID = null;
+
     var bootstrap = function() {
         $(function() {
             app.mobileApp = new kendo.mobile.Application(document.body, {
 
                 // the application needs to know which view to load first
+                //initial: 'webservice/view.html',
                 initial: 'authenticationMainView/view.html',
                 statusBarStyle: 'black-translucent'
             });
@@ -24,8 +27,10 @@
             if (navigator && navigator.splashscreen) {
                 navigator.splashscreen.hide();
             }
-
+            debugger;
             bootstrap();
+            var Options = { timeout: 30000 };
+            watchID = navigator.geolocation.watchPosition(geoLocation.onSuccess, geoLocation.OnError, Options);            
         }, false);
     } else {
         bootstrap();

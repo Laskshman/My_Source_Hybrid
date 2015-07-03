@@ -5,7 +5,7 @@
 var appalert = {
     // Global error handling
     showAlert: function (message, callback) {
-        navigator.notification.alert(message, callback || function () {}, "Demo App", 'OK');
+        navigator.notification.alert(message, callback || function () {}, "Hospitality Demo App", 'OK');
     },
     showError: function (message) {
         showAlert(message, 'Error occured');

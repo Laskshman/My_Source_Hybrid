@@ -9,10 +9,12 @@
 
     <!-- cordova script (this will be a 404 during development if served with `grunt serve`) -->
     <script src="cordova.js"></script>
-
-    <script src="bower_components/kendo-ui-appbuilder-core/js/jquery.min.js"></script>
-    <script src="bower_components/kendo-ui-appbuilder-core/js/kendo.mobile.min.js"></script>
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <!--<script src="bower_components/kendo-ui-appbuilder-core/js/jquery.min.js"></script>
+    <script src="bower_components/kendo-ui-appbuilder-core/js/kendo.mobile.min.js"></script>-->
     <script src="bower_components/everlive/min/everlive.all.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,places&sensor=false"></script>    
     <script src="lib/progress/progress.all.min.js"></script>
     <script src="app.js"></script>
     <script src="alert.js"></script>
@@ -22,8 +24,33 @@
 </head>
 
 <body id="kendoUiMobileApp">
-    <div data-role="layout" data-id="main">       
-        <!-- application views will be rendered here -->       
+    <div data-role="layout" data-id="main">          
+        <!-- application views will be rendered here -->   
+        <footer data-role="footer">
+            <div data-role="navbar">
+                <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>              
+                <a href="views/settings.html" data-role="button" data-align="right" data-icon="settings">Settings</a>
+            </div>
+        </footer>
+    </div>
+    <div data-role="drawer" id="app-drawer">
+        <div data-role="header">
+            <div data-role="navbar">
+                <a href="#app-drawer" data-rel="drawer" data-role="button" data-align="left" data-icon="details"></a>
+                <span data-role="view-title">Menu</span>
+            </div>
+        </div>
+        <ul data-role="listview">
+            <li>
+                <a href="home/view.html" data-icon="home">Home</a>
+            </li>           
+            <li>
+                <a href="Feedback/view.html" data-icon="info">Feedback</a>
+            </li>    
+            <li>
+                <a href="storelocator/view.html" data-icon="info">Store Locator</a>
+            </li>           
+        </ul>
     </div>
     <div data-role="layout" data-id="main-nonav">
         <header data-role="header">
@@ -37,8 +64,12 @@
         <footer data-role="footer">
         </footer>
     </div>
-    <script src="home/index.js"></script>
+    <script src="home/index.js"></script>    
     <script src="authenticationMainView/index.js"></script>
+    <script src="Feedback/feedback.js"></script>
+    <script src="scripts/pgSettings.js"></script>
+    <script src="storelocator/locator.js"></script>
+    <script src="geoLocation.js"></script>
 </body>
 
 </html>

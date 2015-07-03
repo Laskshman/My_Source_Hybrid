@@ -1,7 +1,8 @@
 'use strict';
 
 app.authenticationView = kendo.observable({
-    onShow: function () {}
+    onShow: function () {
+    }
 });
 (function (parent) {
     var provider = app.data.defaultProvider,
@@ -59,23 +60,28 @@ app.authenticationView = kendo.observable({
             },
             validateDataRegister: function (data) {
                 if (!data.email) {
-                    alert('Missing email');
+                    appalert.showAlert('Missing email');
+                    //alert('Missing email');
                     return false;
                 }
                 if (!data.password) {
-                    alert('Missing password');
+                    appalert.showAlert('Missing password');
+                    //alert('Missing password');
                     return false;
                 }
-                if (data.password !== data.passwordSalt) {
-                    alert('Confirm Password Mismatch');
+                if (data.password === data.passwordSalt) {
+                    appalert.showAlert('Confirm Password Mismatch');
+                    //alert('Confirm Password Mismatch');
                     return false;
                 }
                 if (!data.mobileNo) {
-                    alert('Missing Mobile No');
+                    appalert.showAlert('Missing Mobile No');
+                    //alert('Missing Mobile No');
                     return false;
                 }
                 if (!data.userName) {
-                    alert('Missing User Name');
+                    appalert.showAlert('Missing User Name');
+                    //alert('Missing User Name');
                     return false;
                 }
                 return true;
@@ -98,27 +104,24 @@ app.authenticationView = kendo.observable({
                     userName = model.userName,
                     gender = model.gender,
                     birthDate = model.birthDate,
-                    mobileno = model.mobileNo,
                     attrs = {
                         Email: email,
                         DisplayName: displayName,
                         Username: userName,
                         Gender: gender,
                         BirthDate: birthDate,
-                        MobileNo: mobileno
                     };
                 if (!model.validateDataRegister(model)) {
                     return false;
                 }
-
                 provider.Users.register(email, password, attrs)
                     .then(function () {
-                            appalert.showAlert("Registration successful");
-                            app.mobileApp.navigate('home/view.html');
-                        },
-                        function (err) {
-                            appalert.showError(err.message);
-                        });
+                    appalert.showAlert('Registration successful');
+                    app.mobileApp.navigate('authenticationMainView/view.html');
+                },
+                function (err) {
+                    appalert.showError(err.message);
+                });
             },
             toggleView: function () {
                 mode = mode === 'signin' ? 'register' : 'signin';
@@ -131,9 +134,27 @@ app.authenticationView = kendo.observable({
             forgot: function () {
                 debugger;
                 if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
-                    alert("Email address Or Mobile No is required.");
+                    appalert.showError('Email address Or Mobile No is required.');
                     return;
                 }
+                //if (this.authenticationViewModel.mobileNo) {
+                //    debugger;
+                //    //Instantiate Everlive Twilio API
+                //    // var accountId = '${TwilioAccountId}';
+                //    // var authToken = '${TwilioAuthToken}';
+                //    var accountId = '${AC76ff9ab43fda41e118d8fc891fa38ebd}';
+                //    var authToken = '${47b690b5eb2eff01280ded42b6c21512}';
+                //    var twilio = new Everlive.Integration.Twilio(accountId, authToken);
+
+                //    //Send SMS to a specific phone number
+                //    var fromNumber = '(903) 225-2006'; //One of the numbers in your Twilio account
+                //    var toNumber = '+91' + this.authenticationViewModel.mobileNo;
+                //    var message = 'This is SMS from the Demo application.';
+                //    twilio.sendSms(fromNumber, toNumber, message, function (result) {
+                //        //some other logic here...
+                //        done();
+                //    });
+                //}
                 var apiKey = appsettings.everlive.apiKey;
                 $.ajax({
                     type: "POST",
@@ -143,11 +164,14 @@ app.authenticationView = kendo.observable({
                         Email: this.authenticationViewModel.email
                     }),
                     success: function () {
-                        navigator.notification.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
-                        window.location.href = "authenticationMainView/view.html";
+                        appalert.showError('Your password was successfully reset. Please check your email for instructions on choosing a new password.');
+                        // navigator.notification.alert("Your password was successfully reset. Please check your email for instructions on choosing a new password.");
+                        app.mobileApp.navigate('authenticationMainView/view.html');
+                        // window.location.href = "authenticationMainView/view.html";
                     },
                     error: function () {
-                        navigator.notification.alert("Unfortunately, an error occurred resetting your password.")
+                        appalert.showError('Unfortunately, an error occurred resetting your password.');
+                        //navigator.notification.alert("Unfortunately, an error occurred resetting your password.")
                     }
                 });
             },
@@ -159,11 +183,12 @@ app.authenticationView = kendo.observable({
                 alert("Clicked the Facebook");
                 var isFacebookLogin = AppHelper.isKeySet(appsettings.facebook.appId) && AppHelper.isKeySet(appsettings.facebook.redirectUri);
                 if (!isFacebookLogin) {
-                    alert('Facebook App ID and/or Redirect URI not set. You cannot use Facebook login.');
+                    appalert.showError('Facebook App ID and/or Redirect URI not set. You cannot use Facebook login.');
+                    // alert('Facebook App ID and/or Redirect URI not set. You cannot use Facebook login.');
                     return;
                 }
                 if (isInMistSimulator) {
-                    alert(appsettings.messages.mistSimulatorAlert);
+                    appalert.showError(appsettings.messages.mistSimulatorAlert);
                     return;
                 }
                 var facebookConfig = {
@@ -181,10 +206,10 @@ app.authenticationView = kendo.observable({
                 app.mobileApp.showLoading();
                 facebook.getAccessToken(function (token) {
                     provider.everlive.Users.loginWithFacebook(token, function (data) {
-                            alert(JSON.stringify(data));
-                        }, function (error) {
-                            alert(JSON.stringify(error));
-                        })
+                        alert(JSON.stringify(data));
+                    }, function (error) {
+                        alert(JSON.stringify(error));
+                    })
                         .then(function () {
                             // EQATEC analytics monitor - track login type
                             // if (isAnalytics) {
@@ -213,7 +238,7 @@ app.authenticationView = kendo.observable({
                     return;
                 }
                 if (isInMistSimulator) {
-                    alert(appsettings.messages.mistSimulatorAlert);
+                    appalert.showError(appsettings.messages.mistSimulatorAlert);
                     return;
                 }
                 var googleConfig = {

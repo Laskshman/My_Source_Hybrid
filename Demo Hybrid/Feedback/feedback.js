@@ -1,14 +1,17 @@
 'use strict';
 
-app.home = kendo.observable({
-    onShow: function () {              
+app.feedback = kendo.observable({
+    onShow: function () {     
     }
 });
 (function (parent) {
     var navigateHome = function () {
         app.mobileApp.navigate('authenticationMainView/view.html');
     };
-    var homeViewModel = kendo.observable({
+    var feedbackViewModel = kendo.observable({
+        displayName: '',
+        email: '',
+        mobileNo: '',
         // Logout user
         logout: function () {
             AppHelper.logout()
@@ -16,7 +19,10 @@ app.home = kendo.observable({
                     appalert.showError(err.message);
                     navigateHome();
                 });
+        },
+        submit: function () {
+            appalert.showAlert("Submit button is clicked");
         }
     });
-    parent.set('homeViewModel', homeViewModel);
-})(app.home)
+    parent.set('feedbackViewModel', feedbackViewModel);
+})(app.feedback)

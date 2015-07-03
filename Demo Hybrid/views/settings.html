@@ -1,0 +1,14 @@
+<div data-role="view" data-title="Settings" data-layout="main" data-model="app.pgSettings" data-show="app.pgSettings.onShow">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title">Settings</span>
+            <a data-align="left" data-role="button" data-bind="events: { click: settingsViewModel.logout }">Logout</a>
+        </div>
+    </header>
+    <div>
+        <div>
+            <label for="favorite">Is This App Awesome?</label>
+            <input id="favorite" type="checkbox" data-role="switch" data-checked=false />
+        </div>
+    </div>
+</div>

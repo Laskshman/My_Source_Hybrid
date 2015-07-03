@@ -1,14 +1,14 @@
 'use strict';
 
-app.home = kendo.observable({
-    onShow: function () {              
+app.pgSettings = kendo.observable({
+    onShow: function () {      
     }
 });
 (function (parent) {
     var navigateHome = function () {
         app.mobileApp.navigate('authenticationMainView/view.html');
     };
-    var homeViewModel = kendo.observable({
+    var settingsViewModel = kendo.observable({
         // Logout user
         logout: function () {
             AppHelper.logout()
@@ -18,5 +18,5 @@ app.home = kendo.observable({
                 });
         }
     });
-    parent.set('homeViewModel', homeViewModel);
-})(app.home)
+    parent.set('settingsViewModel', settingsViewModel);
+})(app.pgSettings)
