@@ -138,8 +138,13 @@ app.authenticationView = kendo.observable({
             },
             forgot: function () {
                 debugger;
-                if (!this.authenticationViewModel.email) {
-                    appalert.showAlert('Email address is required.');
+                 if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
+                    appalert.showError('Email address Or Mobile No is required.');
+                    return;
+                }
+                if (this.authenticationViewModel.mobileNo) {
+                    debugger;
+                    authenticationViewModel.sendNonInteractiveSMS(this.authenticationViewModel.mobileNo);
                     return;
                 }
                 // if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
@@ -183,6 +188,75 @@ app.authenticationView = kendo.observable({
                         //navigator.notification.alert("Unfortunately, an error occurred resetting your password.")
                     }
                 });
+            },
+            sendNonInteractiveSMS: function (mobileNo) {
+                debugger;
+                var resetpwd = authenticationViewModel.randompassword();
+                var resetpwdmsg = 'Your Reset Password Is ' + resetpwd;
+                authenticationViewModel.getUserdetails(mobileNo);
+                var MobileNo= "+91" + mobileNo;
+                //provider.Users.userChangePassword(resetpwd);                
+                if (!authenticationViewModel.checkSimulator()) {
+                    var options = {
+                        android: {
+                            intent: ''
+                        }
+                    };
+                    window.sms.send(MobileNo, resetpwdmsg, options, authenticationViewModel.onSuccess, authenticationViewModel.onError);
+                }
+            },
+            getUserdetails: function (mobileNo) {
+                debugger;
+                alert(mobileNo);                
+                provider.Users.get()
+                    .then(function (data) {
+                        alert(JSON.stringify(data));
+                    	//need to check for the Data which match mobile no and get and change its user password.
+                    },
+                    function (error) {
+                        alert(JSON.stringify(error));
+                    });                
+            },
+            saverandompassword: function(){
+                
+            },
+            randompassword: function() {
+                var alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+                var i;
+                for (i = 0; i < 6; i++) {
+                    var a = alpha[Math.floor(Math.random() * alpha.length)];
+                    var b = alpha[Math.floor(Math.random() * alpha.length)];
+                    var c = alpha[Math.floor(Math.random() * alpha.length)];
+                    var d = alpha[Math.floor(Math.random() * alpha.length)];
+                    var e = alpha[Math.floor(Math.random() * alpha.length)];
+                    var f = alpha[Math.floor(Math.random() * alpha.length)];
+                    var g = alpha[Math.floor(Math.random() * alpha.length)];
+                    var h = alpha[Math.floor(Math.random() * alpha.length)];
+                }
+                var code = a + b + c +  d +  e +  f +  g + h;               
+                return code;
+            },
+            checkSimulator: function () {
+                if (window.navigator.simulator === true) {
+                    alert('This plugin is not available in the simulator.');
+                    return true;
+                } else if (window.sms === undefined) {
+                    alert('Plugin not found. Maybe you are running in AppBuilder Companion app which currently does not support this plugin.');
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            // callbacks (wrapping alerts in a timeout, because they would otherwise freeze the UI on iOS)
+            onSuccess: function(msg) {
+                setTimeout(function() {
+                    alert('SMS success: ' + msg);                
+                }, 1);
+            },
+            onError: function(msg) {
+                setTimeout(function() {
+                    alert('SMS error: ' + msg);                
+                }, 1);
             },
             forgotView: function () {
                 $("#forgot").data("kendoMobileModalView").close();
