@@ -1,0 +1,35 @@
+<div data-role="view" data-title="Change Password" data-layout="main" data-model="app.changePasswordView" data-show="app.changePasswordView.onShow">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title">Change Password</span>
+            <a data-align="left" data-role="button" data-bind="events: { click: changepasswordViewModel.logout }">Logout</a>
+        </div>
+    </header>
+    <div>
+        <form>
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>
+                        Old Password : 
+                        <input type="password" data-bind="value: changepasswordViewModel.oldpassword" required>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        New Password :
+                        <input type="password" data-bind="value: changepasswordViewModel.newpassword" required>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        Confim New Password :
+                        <input type="password" data-bind="value: changepasswordViewModel.cfmnewpassword" required>
+                    </label>
+                </li>                                                          
+            </ul>
+            <div class="button-group button-group-vertical">
+                <a class="km-state-active" data-role="button" data-bind="events: { click: changepasswordViewModel.submit }">Submit</a>               
+            </div>
+        </form>
+    </div>
+</div>

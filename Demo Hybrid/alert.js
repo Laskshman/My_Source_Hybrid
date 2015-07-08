@@ -8,7 +8,7 @@ var appalert = {
         navigator.notification.alert(message, callback || function () {}, "Hospitality Demo App", 'OK');
     },
     showError: function (message) {
-        showAlert(message, 'Error occured');
+        appalert.showAlert(message, 'Error occured');
     }    
 };
 

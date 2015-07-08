@@ -1,7 +1,7 @@
 'use strict';
 
 app.authenticationView = kendo.observable({
-    onShow: function () {}   
+    onShow: function () {}
 });
 (function (parent) {
     var provider = app.data.defaultProvider,
@@ -13,7 +13,6 @@ app.authenticationView = kendo.observable({
                 if (error.message) {
                     alert(error.message);
                 }
-
                 return false;
             }
 
@@ -74,7 +73,7 @@ app.authenticationView = kendo.observable({
                     //alert('Missing password');
                     return false;
                 }
-                if (data.password === data.passwordSalt) {
+                if (data.password !== data.passwordSalt) {
                     appalert.showAlert('Confirm Password Mismatch');
                     //alert('Confirm Password Mismatch');
                     return false;
@@ -138,13 +137,13 @@ app.authenticationView = kendo.observable({
             },
             forgot: function () {
                 debugger;
-                 if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
+                if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
                     appalert.showError('Email address Or Mobile No is required.');
                     return;
                 }
                 if (this.authenticationViewModel.mobileNo) {
                     debugger;
-                    authenticationViewModel.sendNonInteractiveSMS(this.authenticationViewModel.mobileNo);
+                    authenticationViewModel.getUserdetails(this.authenticationViewModel.mobileNo);
                     return;
                 }
                 // if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
@@ -189,13 +188,10 @@ app.authenticationView = kendo.observable({
                     }
                 });
             },
-            sendNonInteractiveSMS: function (mobileNo) {
-                debugger;
-                var resetpwd = authenticationViewModel.randompassword();
-                var resetpwdmsg = 'Your Reset Password Is ' + resetpwd;
-                authenticationViewModel.getUserdetails(mobileNo);
-                var MobileNo= "+91" + mobileNo;
-                //provider.Users.userChangePassword(resetpwd);                
+            sendNonInteractiveSMS: function (mobileno,resetpwd) {
+                debugger;                
+                var resetpwdmsg = 'Your Reset Password Is ' + resetpwd;                
+                var MobileNo = "+91" + mobileno;                      
                 if (!authenticationViewModel.checkSimulator()) {
                     var options = {
                         android: {
@@ -205,22 +201,46 @@ app.authenticationView = kendo.observable({
                     window.sms.send(MobileNo, resetpwdmsg, options, authenticationViewModel.onSuccess, authenticationViewModel.onError);
                 }
             },
-            getUserdetails: function (mobileNo) {
-                debugger;
-                alert(mobileNo);                
-                provider.Users.get()
-                    .then(function (data) {
-                        alert(JSON.stringify(data));
-                    	//need to check for the Data which match mobile no and get and change its user password.
+            getUserdetails: function (mobileNo) {                
+                alert(mobileNo);
+                var filter = {
+                    "MobileNo": mobileNo
+                };
+                var apiKey = appsettings.everlive.apiKey;
+                //Ajax request using jQuery
+                $.ajax({
+                    url: "http://api.everlive.com/v1/" + apiKey + "/Users",
+                    type: "GET",
+                    headers: {
+                        "X-Everlive-Filter": JSON.stringify(filter)
                     },
-                    function (error) {
+                    success: function (data) {                        
+                        var username= data.Result[0].Username;
+                        var mobileno= data.Result[0].MobileNo;
+                        var resetpwd = authenticationViewModel.randompassword();
+                        var parameters="?username="+ username +"&newPassword="+resetpwd;                        
+                        $.ajax({
+                            type: "GET",
+                            url: "https://api.everlive.com/v1/" + apiKey + "/functions/ResetPassword"+ parameters,
+                            contentType: "application/json",                            
+                            success: function (data) {                                
+                                appalert.showAlert('Your password was successfully reset. SMS is sent to your Registered Mobile Number ');                                                               	
+                                //app.mobileApp.navigate('authenticationMainView/view.html');       
+                                authenticationViewModel.sendNonInteractiveSMS(mobileno,resetpwd);
+                                authenticationViewModel.forgotView();
+                            },
+                            error: function () {                                
+                                appalert.showError('Unfortunately, an error occurred resetting your password.');                               
+                            }
+                        });                                              
+                    },
+                    error: function (error) {
+                        debugger;
                         alert(JSON.stringify(error));
-                    });                
-            },
-            saverandompassword: function(){
-                
-            },
-            randompassword: function() {
+                    }
+                });
+            },            
+            randompassword: function () {
                 var alpha = new Array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
                 var i;
                 for (i = 0; i < 6; i++) {
@@ -233,7 +253,7 @@ app.authenticationView = kendo.observable({
                     var g = alpha[Math.floor(Math.random() * alpha.length)];
                     var h = alpha[Math.floor(Math.random() * alpha.length)];
                 }
-                var code = a + b + c +  d +  e +  f +  g + h;               
+                var code = a + b + c + d + e + f + g + h;
                 return code;
             },
             checkSimulator: function () {
@@ -248,21 +268,22 @@ app.authenticationView = kendo.observable({
                 }
             },
             // callbacks (wrapping alerts in a timeout, because they would otherwise freeze the UI on iOS)
-            onSuccess: function(msg) {
-                setTimeout(function() {
-                    alert('SMS success: ' + msg);                
+            onSuccess: function (msg) {
+                setTimeout(function () {
+                    alert('SMS success: ' + msg);
                 }, 1);
             },
-            onError: function(msg) {
-                setTimeout(function() {
-                    alert('SMS error: ' + msg);                
+            onError: function (msg) {
+                setTimeout(function () {
+                    alert('SMS error: ' + msg);
                 }, 1);
             },
             forgotView: function () {
                 $("#forgot").data("kendoMobileModalView").close();
+                this.authenticationViewModel.email="";
+                this.authenticationViewModel.mobileNo="";                
             },
-            signupFacebook: function () {
-                debugger;
+            signupFacebook: function () {                
                 alert("Clicked the Facebook");
                 var isFacebookLogin = AppHelper.isKeySet(appsettings.facebook.appId) && AppHelper.isKeySet(appsettings.facebook.redirectUri);
                 if (!isFacebookLogin) {
