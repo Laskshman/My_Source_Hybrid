@@ -135,14 +135,12 @@ app.authenticationView = kendo.observable({
                 var selected = sel.options[sel.selectedIndex].value;
                 sel.style.color = (selected === 0) ? '#b6c5c6' : '#34495e';
             },
-            forgot: function () {
-                debugger;
+            forgot: function () {                
                 if (!this.authenticationViewModel.email && !this.authenticationViewModel.mobileNo) {
                     appalert.showError('Email address Or Mobile No is required.');
                     return;
                 }
-                if (this.authenticationViewModel.mobileNo) {
-                    debugger;
+                if (this.authenticationViewModel.mobileNo) {                    
                     authenticationViewModel.getUserdetails(this.authenticationViewModel.mobileNo);
                     return;
                 }
@@ -150,8 +148,7 @@ app.authenticationView = kendo.observable({
                 //     appalert.showError('Email address Or Mobile No is required.');
                 //     return;
                 // }
-                //if (this.authenticationViewModel.mobileNo) {
-                //    debugger;
+                //if (this.authenticationViewModel.mobileNo) {                
                 //    //Instantiate Everlive Twilio API
                 //    // var accountId = '${TwilioAccountId}';
                 //    // var authToken = '${TwilioAuthToken}';
@@ -188,8 +185,7 @@ app.authenticationView = kendo.observable({
                     }
                 });
             },
-            sendNonInteractiveSMS: function (mobileno,resetpwd) {
-                debugger;                
+            sendNonInteractiveSMS: function (mobileno,resetpwd) {                           
                 var resetpwdmsg = 'Your Reset Password Is ' + resetpwd;                
                 var MobileNo = "+91" + mobileno;                      
                 if (!authenticationViewModel.checkSimulator()) {
@@ -199,10 +195,23 @@ app.authenticationView = kendo.observable({
                         }
                     };
                     window.sms.send(MobileNo, resetpwdmsg, options, authenticationViewModel.onSuccess, authenticationViewModel.onError);
+                    // var parameters="?mobileNo="+ MobileNo +"&message="+resetpwdmsg;   
+                    // $.ajax({
+                    //         type: "GET",
+                    //         url: "https://api.everlive.com/v1/" + apiKey + "/functions/SentSMS"+ parameters,
+                    //         contentType: "application/json",                            
+                    //         success: function (data) {                                
+                    //             appalert.showAlert('Your password was successfully reset. SMS is sent to your Registered Mobile Number ');                                                               	
+                    //             //app.mobileApp.navigate('authenticationMainView/view.html');                                       
+                    //             authenticationViewModel.forgotView();
+                    //         },
+                    //         error: function () {                                
+                    //             appalert.showError('Unfortunately, an error occurred resetting your password.');                               
+                    //         }
+                    //     }); 
                 }
             },
-            getUserdetails: function (mobileNo) {                
-                alert(mobileNo);
+            getUserdetails: function (mobileNo) {                                
                 var filter = {
                     "MobileNo": mobileNo
                 };
@@ -227,15 +236,14 @@ app.authenticationView = kendo.observable({
                                 appalert.showAlert('Your password was successfully reset. SMS is sent to your Registered Mobile Number ');                                                               	
                                 //app.mobileApp.navigate('authenticationMainView/view.html');       
                                 authenticationViewModel.sendNonInteractiveSMS(mobileno,resetpwd);
-                                authenticationViewModel.forgotView();
+                                //authenticationViewModel.forgotView();
                             },
                             error: function () {                                
                                 appalert.showError('Unfortunately, an error occurred resetting your password.');                               
                             }
                         });                                              
                     },
-                    error: function (error) {
-                        debugger;
+                    error: function (error) {                        
                         alert(JSON.stringify(error));
                     }
                 });
